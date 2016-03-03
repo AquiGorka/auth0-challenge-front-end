@@ -1,12 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-
-
-class Module extends React.Component {
-	render() {
-		return <div>Module 1</div>
-	}
-};
+import Module from './module.js';
 
 //
 document.addEventListener( 'DOMContentLoaded', () => render( <Module />, document.body ) );
