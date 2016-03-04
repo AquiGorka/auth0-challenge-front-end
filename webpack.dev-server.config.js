@@ -46,6 +46,6 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({title: 'React-Stylus-Webpack boilerplate'})
+    new HtmlWebpackPlugin({title: 'Auth0 Challenge Front-end'})
   ]
 };

@@ -25,9 +25,6 @@ module.exports = {
       test: /\.png$/,
       loader: 'file-loader?name=images/[name].[ext]?[hash]'
     }, {
-      test: /\.md$/,
-      loader: 'html!markdown'
-    }, {
       test: /node_modules\/auth0-lock\/.*\.js$/,
       loaders: [
         'transform-loader/cacheable?brfs',
@@ -44,6 +41,9 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin('styles.css', {allChunks: false}),
     new webpack.optimize.UglifyJsPlugin({minimize: true}),
-    new HtmlWebpackPlugin({title: 'Auth0 Challenge Frontend'})
+    new HtmlWebpackPlugin({
+      template: './dist/index.html',
+      inject: 'body'
+    })
   ]
 };

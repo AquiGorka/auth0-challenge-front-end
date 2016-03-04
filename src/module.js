@@ -46,16 +46,16 @@ class Data extends React.Component {
 	}
 	render() {
 		return (
-			<div>
-				<div>
-					<div>Top Users with failed attempts because of password</div>
+			<div id="content-area" className="tab-content">
+				<div id="password" className="tab-pane active">
+					<div>Top users with failed attempts because of password</div>
 					<ul>
 						{this.state.passwordFailure.map( (item, index) => {
 							return <li key={'p' + index}><Password item={item} /></li>;
 						})}
 					</ul>
 				</div>
-				<div>
+				<div id="username" className="tab-pane">
 					<div>Top users with failed attempts because of usernames</div>
 					<ul>
 						{this.state.usernameFailure.map( (item, index) => {
@@ -63,7 +63,7 @@ class Data extends React.Component {
 						})}
 					</ul>
 				</div>
-				<div>
+				<div id="count" className="tab-pane">
 					<div>Top users with more logins</div>
 					<ul>
 						{this.state.loginCount.map( (item, index) => {
