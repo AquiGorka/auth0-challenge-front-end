@@ -1,7 +1,7 @@
 var path              = require('path');
 var webpack           = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var PORT              = 3000;
+var PORT              = 8080;
 
 module.exports = {
   port: PORT,

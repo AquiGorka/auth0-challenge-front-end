@@ -1,9 +1,11 @@
 import React from 'react';
 import $ from 'jquery';
 import Auth0Lock from 'auth0-lock';
+import Auth0 from 'auth0-js';
 import config from '../config.js'
 
 const auth0Lock = new Auth0Lock(config.clientID, config.domain);
+const auth0 = new Auth0({clientID: config.clientID, domain: config.domain});
 
 const Spinner = (props) => {
 	return <div>spinner</div>;
@@ -31,8 +33,8 @@ class Data extends React.Component {
 					.fail( err => {
 						// if we've reach this far I believe we should try again - maybe our token has expired
 						let refreshToken = localStorage.getItem('refreshToken');
-						if (refreshToken) {
-							auth0Lock.refreshToken(refreshToken, (err, delegationResult) => {
+            if (refreshToken) {
+							auth0.refreshToken(refreshToken, (err, delegationResult) => {
 								localStorage.setItem('userToken', delegationResult.id_token);
 								login();
 							});
