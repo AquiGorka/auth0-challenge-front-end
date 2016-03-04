@@ -16,7 +16,7 @@ npm install
 gulp serve
 ```
 
-And then open up a browser to http://localhost:3000
+And then open up a browser to http://localhost:8080
 
 ### Build
 
