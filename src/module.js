@@ -5,13 +5,10 @@ import Auth0 from 'auth0-js';
 import config from '../config.js';
 import styles from './module.styl';
 import md5 from 'md5';
+import Spinner from './components/spinner/spinner.js'
 
 const auth0Lock = new Auth0Lock(config.clientID, config.domain);
 const auth0 = new Auth0({clientID: config.clientID, domain: config.domain});
-
-const Spinner = props => {
-  return <div>spinner</div>;
-};
 
 const PasswordTable = props => {
   return (
