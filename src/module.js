@@ -4,24 +4,13 @@ import Auth0Lock from 'auth0-lock';
 import Auth0 from 'auth0-js';
 import config from '../config.js';
 import styles from './module.styl';
+import md5 from 'md5';
 
 const auth0Lock = new Auth0Lock(config.clientID, config.domain);
 const auth0 = new Auth0({clientID: config.clientID, domain: config.domain});
 
 const Spinner = props => {
   return <div>spinner</div>;
-};
-
-class UserAvatar extends React.Component {
-  componentDidMount() {
-    //$.get('https://aquigorka.auth0.com/api/v2/users')
-      //.done( res => {
-      //  console.log(res);
-      //});
-  }
-  render() {
-    return <img className="img-circle" src="https://s.gravatar.com/avatar/d87a97caea82d71b41ef2d981458c107" alt={this.props.item} width="32" />
-  }
 };
 
 const PasswordTable = props => {
@@ -54,7 +43,7 @@ const PasswordItem = props => {
     <tr>
       <td>
         <a href={props.item.url_dashboard}>
-          <UserAvatar item={props.item} />
+          <img className="img-circle" src={'https://s.gravatar.com/avatar/' + md5(props.item.email)} alt={props.item} width="32" />
         </a>
       </td>
       <td className="truncate" title={props.item.email}>
@@ -83,7 +72,6 @@ const UsernameTable = props => {
             <tr>
               <th dataColumn="picture"></th>
               <th dataColumn="name" className="pointer">Name</th>
-              <th dataColumn="email" className="pointer">Email</th>
               <th dataColumn="attempts" className="pointer"># of Attempts</th>
               <th className="pointer"></th>
             </tr>
@@ -103,7 +91,7 @@ const UsernameItem = props => {
     <tr>
       <td>
         <a href={props.item.url_dashboard}>
-          <UserAvatar item={props.item} />
+          <img className="img-circle" src={'https://s.gravatar.com/avatar/' + md5(props.item.email)} alt={props.item} width="32" />
         </a>
       </td>
       <td className="truncate" title={props.item.email}>
@@ -111,8 +99,7 @@ const UsernameItem = props => {
           {props.item.user_name}
         </a>
       </td>
-      <td className="truncate" title={props.item.email}>{props.item.email}</td>
-      <td>{props.item.failed_pass}</td>
+      <td>{props.item.failed_user}</td>
       <td className='actions'>
         <a href={'mailto:' + props.item.email}>
           <i className='icon-budicon-778'></i>
@@ -152,7 +139,7 @@ const LoginItem = props => {
     <tr>
       <td>
         <a href={props.item.url_dashboard}>
-          <UserAvatar item={props.item} />
+          <img className="img-circle" src={'https://s.gravatar.com/avatar/' + md5(props.item.email)} alt={props.item} width="32" />
         </a>
       </td>
       <td className="truncate" title={props.item.email}>
