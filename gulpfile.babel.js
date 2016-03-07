@@ -7,6 +7,7 @@ import stylus           from 'gulp-stylus';
 import autoprefixer     from 'autoprefixer-stylus';
 
 import webpackConfig  from './webpack.config.js';
+import webpackProductionConfig  from './webpack.production.config.js';
 
 gulp.task('template', () => {
   // Add locals for jade
@@ -42,6 +43,17 @@ gulp.task('webpack', done => {
   });
 });
 
+gulp.task('webpack.production', done => {
+  webpack(webpackProductionConfig).run((err, stats) => {
+    if (err) {
+      console.log('Error', err);
+    } else {
+      console.log(stats.toString());
+    }
+    if (done) done();
+  });
+});
+
 gulp.task('server', () => {
   new WebpackDevServer(webpack(webpackConfig), {
     publicPath: webpackConfig.output.publicPath,
@@ -59,7 +71,7 @@ gulp.task('dev', ['template', 'styles', 'webpack', 'server'], done => {
   if (done) done();
 });
 
-gulp.task('build', ['template', 'styles', 'webpack'], done => {
+gulp.task('build', ['template', 'styles', 'webpack.production'], done => {
   if (done) done();
 });
 
