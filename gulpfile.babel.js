@@ -59,6 +59,10 @@ gulp.task('dev', ['template', 'styles', 'webpack', 'server'], done => {
   if (done) done();
 });
 
+gulp.task('build', ['template', 'styles', 'webpack'], done => {
+  if (done) done();
+});
+
 gulp.task('default', function() {
     gulp.start('dev');
 });
