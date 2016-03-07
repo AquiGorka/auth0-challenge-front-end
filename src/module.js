@@ -12,33 +12,165 @@ const Spinner = props => {
   return <div>spinner</div>;
 };
 
+class UserAvatar extends React.Component {
+  componentDidMount() {
+    //$.get('https://aquigorka.auth0.com/api/v2/users')
+      //.done( res => {
+      //  console.log(res);
+      //});
+  }
+  render() {
+    return <img className="img-circle" src="https://s.gravatar.com/avatar/d87a97caea82d71b41ef2d981458c107" alt={this.props.item} width="32" />
+  }
+};
+
 const PasswordTable = props => {
   return (
     <div id="password" className="tab-pane active">
       <div>Top users with failed attempts because of password</div>
-      <table className={styles.module}>
-        <thead>
-        <tr>
-        </tr>
-        </thead>
-        <tbody>
-        {props.data.map( (item, index) => {
-          return <tr key={'p' + index}><td><Password item={item} /></td></tr>;
-        })}
-        </tbody>
-      </table>
+      <div className="dataTables_wrapper" role="grid">
+        <table className="table data-table dataTable">
+          <thead>
+            <tr>
+              <th dataColumn="picture"></th>
+              <th dataColumn="name" className="pointer">Name</th>
+              <th dataColumn="email" className="pointer">Email</th>
+              <th dataColumn="attempts" className="pointer"># of Attempts</th>
+              <th className="pointer"></th>
+            </tr>
+          </thead>
+          <tbody>
+          {props.data.map( (item, index) => {
+            return <PasswordItem key={index} item={item} />;
+          })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
-const Password = props => {
-	return <div>{JSON.stringify(props.item)}</div>;
+const PasswordItem = props => {
+	return (
+    <tr>
+      <td>
+        <a href={props.item.url_dashboard}>
+          <UserAvatar item={props.item} />
+        </a>
+      </td>
+      <td className="truncate" title={props.item.email}>
+        <a href={props.item.url_dashboard}>
+          {props.item.user_name}
+        </a>
+      </td>
+      <td className="truncate" title={props.item.email}>{props.item.email}</td>
+      <td>{props.item.failed_pass}</td>
+      <td className='actions'>
+        <a href={'mailto:' + props.item.email}>
+          <i className='icon-budicon-778'></i>
+        </a>
+      </td>
+    </tr>
+  );
 };
-const Usernames = props => {
-	return <div>{JSON.stringify(props.item)}</div>;
+
+const UsernameTable = props => {
+  return (
+    <div id="username" className="tab-pane">
+      <div>Top users with failed attempts because of usernames</div>
+      <div className="dataTables_wrapper" role="grid">
+        <table className="table data-table dataTable">
+          <thead>
+            <tr>
+              <th dataColumn="picture"></th>
+              <th dataColumn="name" className="pointer">Name</th>
+              <th dataColumn="email" className="pointer">Email</th>
+              <th dataColumn="attempts" className="pointer"># of Attempts</th>
+              <th className="pointer"></th>
+            </tr>
+          </thead>
+          <tbody>
+          {props.data.map( (item, index) => {
+            return <UsernameItem key={index} item={item} />;
+          })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
-const MoreLogins = props => {
-	return <div>{JSON.stringify(props.item)}</div>;
+const UsernameItem = props => {
+  return (
+    <tr>
+      <td>
+        <a href={props.item.url_dashboard}>
+          <UserAvatar item={props.item} />
+        </a>
+      </td>
+      <td className="truncate" title={props.item.email}>
+        <a href={props.item.url_dashboard}>
+          {props.item.user_name}
+        </a>
+      </td>
+      <td className="truncate" title={props.item.email}>{props.item.email}</td>
+      <td>{props.item.failed_pass}</td>
+      <td className='actions'>
+        <a href={'mailto:' + props.item.email}>
+          <i className='icon-budicon-778'></i>
+        </a>
+      </td>
+    </tr>
+  );
 };
+
+const LoginTable = props => {
+  return (
+    <div id="count" className="tab-pane">
+      <div>Top users with more logins</div>
+      <div className="dataTables_wrapper" role="grid">
+        <table className="table data-table dataTable">
+          <thead>
+            <tr>
+              <th dataColumn="picture"></th>
+              <th dataColumn="name" className="pointer">Name</th>
+              <th dataColumn="email" className="pointer">Email</th>
+              <th dataColumn="attempts" className="pointer"># of Attempts</th>
+              <th className="pointer"></th>
+            </tr>
+          </thead>
+          <tbody>
+          {props.data.map( (item, index) => {
+            return <LoginItem key={index} item={item} />;
+          })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+const LoginItem = props => {
+  return (
+    <tr>
+      <td>
+        <a href={props.item.url_dashboard}>
+          <UserAvatar item={props.item} />
+        </a>
+      </td>
+      <td className="truncate" title={props.item.email}>
+        <a href={props.item.url_dashboard}>
+          {props.item.user_name}
+        </a>
+      </td>
+      <td className="truncate" title={props.item.email}>{props.item.email}</td>
+      <td>{props.item.logins}</td>
+      <td className='actions'>
+        <a href={'mailto:' + props.item.email}>
+          <i className='icon-budicon-778'></i>
+        </a>
+      </td>
+    </tr>
+  );
+};
+
 class Data extends React.Component {
 	constructor(props) {
 		super(props);
@@ -70,22 +202,8 @@ class Data extends React.Component {
 		return (
 			<div id="content-area" className="tab-content">
 				<PasswordTable data={this.state.passwordFailure} />
-				<div id="username" className="tab-pane">
-					<div>Top users with failed attempts because of usernames</div>
-					<ul>
-						{this.state.usernameFailure.map( (item, index) => {
-							return <li key={'u' + index}><Password item={item} /></li>;
-						})}
-					</ul>
-				</div>
-				<div id="count" className="tab-pane">
-					<div>Top users with more logins</div>
-					<ul>
-						{this.state.loginCount.map( (item, index) => {
-							return <li key={'l' + index}><Password item={item} /></li>;
-						})}
-					</ul>
-				</div>
+        <UsernameTable data={this.state.usernameFailure} />
+				<LoginTable data={this.state.loginCount} />
       </div>
 		);
 	}
