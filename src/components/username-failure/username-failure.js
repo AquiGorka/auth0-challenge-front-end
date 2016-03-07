@@ -1,10 +1,11 @@
 import React from 'react';
 import md5 from 'md5';
+import Spinner from '../spinner/spinner.js';
 
 const UsernameTable = props => {
-  return (
-    <div id="username" className="tab-pane">
-      <div>Top users with failed attempts because of usernames</div>
+  let content = <Spinner />;
+  if (props.data != null) {
+    content = (
       <div className="dataTables_wrapper" role="grid">
         <table className="table data-table dataTable">
           <thead>
@@ -22,9 +23,16 @@ const UsernameTable = props => {
           </tbody>
         </table>
       </div>
+    );
+  }
+  return (
+    <div id="username" className="tab-pane">
+      <div>Top users with failed attempts because of usernames</div>
+      {content}
     </div>
   );
 };
+
 const UsernameItem = props => {
   return (
     <tr>

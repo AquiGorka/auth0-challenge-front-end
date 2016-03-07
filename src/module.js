@@ -16,7 +16,7 @@ class Data extends React.Component {
 	constructor(props) {
 		super(props);
 		//
-		this.state = { passwordFailure: [], usernameFailure: [], loginCount: [] };
+		this.state = { passwordFailure: null, usernameFailure: null, loginCount: null };
 	}
 	componentDidMount() {
 		var that = this,
