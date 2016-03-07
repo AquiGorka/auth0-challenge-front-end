@@ -120,7 +120,7 @@ const LoginTable = props => {
               <th dataColumn="picture"></th>
               <th dataColumn="name" className="pointer">Name</th>
               <th dataColumn="email" className="pointer">Email</th>
-              <th dataColumn="attempts" className="pointer"># of Attempts</th>
+              <th dataColumn="attempts" className="pointer"># of Logins</th>
               <th className="pointer"></th>
             </tr>
           </thead>
