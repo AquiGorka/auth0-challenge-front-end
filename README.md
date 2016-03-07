@@ -30,4 +30,4 @@ gulp build
 
 - Auth0 use Auth0 for user authentication (why wouldn't they!). This repo takes an app I created in their management console. This code should work for their own management console simply by changing the CLIENT ID and DOMAIN used by their Auht0Lock js client.
 - Uses gravatar to display the user's avatar. In an upgrade or new feature I'd rather have the API return the full user profile to display more information (or at least the same signature :: username table does not include the user's email)
-
+- Search filter works on the three lists at the same time. This is intentional, it means to find if there is a user that appears on more than one list.
