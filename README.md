@@ -13,10 +13,10 @@ Based on code boilerplate, dev setup and build script from [AlejoFernandez](http
 
 ```sh
 npm install
-gulp serve
+gulp
 ```
 
-And then open up a browser to http://localhost:8080
+And then open up a browser to http://localhost:8080 and head to public/
 
 ### Build
 
