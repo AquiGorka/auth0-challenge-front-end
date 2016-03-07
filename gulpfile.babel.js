@@ -6,24 +6,33 @@ import jade             from 'gulp-jade';
 import stylus           from 'gulp-stylus';
 import autoprefixer     from 'autoprefixer-stylus';
 
-import productionConfig from './webpack.production.config';
-import devServerConfig  from './webpack.dev-server.config';
+import webpackConfig  from './webpack.config.js';
 
-gulp.task('serve', () => {
-  new WebpackDevServer(webpack(devServerConfig), {
-    publicPath: devServerConfig.output.publicPath,
-    hot: true,
-    historyApiFallback: true
-  }).listen(devServerConfig.port, 'localhost', (err, result) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log('Listening at localhost:' + devServerConfig.port);
-  });
+gulp.task('template', () => {
+  // Add locals for jade
+  var DATA = {};
+  gulp.src('./lib/*.jade')
+    .pipe(jade({
+      locals: DATA,
+      pretty: true
+    }))
+    .pipe(gulp.dest('./public'))
 });
 
-gulp.task('build', ['template', 'styles'], done => {
-  webpack(productionConfig).run((err, stats) => {
+gulp.task('styles', () => {
+  return gulp.src('lib/css/*.styl')
+    .pipe(stylus({
+      url: {
+        name: 'embedurl',
+        paths: [__dirname + '/img'],
+        limit: false
+      }
+    }))
+    .pipe(gulp.dest('./public'))
+});
+
+gulp.task('webpack', done => {
+  webpack(webpackConfig).run((err, stats) => {
     if (err) {
       console.log('Error', err);
     } else {
@@ -33,27 +42,23 @@ gulp.task('build', ['template', 'styles'], done => {
   });
 });
 
-gulp.task('template', function() {
-  // Add locals for jade
-  var DATA = {};
-
-  gulp.src('./lib/*.jade')
-    .pipe(jade({
-      locals: DATA,
-      pretty: true
-    }))
-    .pipe(gulp.dest('./dist'))
+gulp.task('server', () => {
+  new WebpackDevServer(webpack(webpackConfig), {
+    publicPath: webpackConfig.output.publicPath,
+    hot: true,
+    historyApiFallback: true
+  }).listen(8080, 'localhost', (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log('Listening at http://localhost:8080');
+  });
 });
 
-gulp.task('styles', function () {
-  return gulp.src('lib/css/*.styl')
-    .pipe(stylus({
-      use: [autoprefixer('iOS >= 7', 'last 1 Chrome version')],
-      url: {
-        name: 'embedurl',
-        paths: [__dirname + '/img'],
-        limit: false
-      }
-    }))
-    .pipe(gulp.dest('./dist'))
+gulp.task('dev', ['template', 'styles', 'webpack', 'server'], done => {
+  if (done) done();
+});
+
+gulp.task('default', function() {
+    gulp.start('dev');
 });

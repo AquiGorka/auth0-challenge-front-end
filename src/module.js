@@ -2,21 +2,41 @@ import React from 'react';
 import $ from 'jquery';
 import Auth0Lock from 'auth0-lock';
 import Auth0 from 'auth0-js';
-import config from '../config.js'
+import config from '../config.js';
+import styles from './module.styl';
 
 const auth0Lock = new Auth0Lock(config.clientID, config.domain);
 const auth0 = new Auth0({clientID: config.clientID, domain: config.domain});
 
-const Spinner = (props) => {
-	return <div>spinner</div>;
+const Spinner = props => {
+  return <div>spinner</div>;
 };
-const Password = (props) => {
+
+const PasswordTable = props => {
+  return (
+    <div id="password" className="tab-pane active">
+      <div>Top users with failed attempts because of password</div>
+      <table className={styles.module}>
+        <thead>
+        <tr>
+        </tr>
+        </thead>
+        <tbody>
+        {props.data.map( (item, index) => {
+          return <tr key={'p' + index}><td><Password item={item} /></td></tr>;
+        })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+const Password = props => {
 	return <div>{JSON.stringify(props.item)}</div>;
 };
-const Usernames = (props) => {
+const Usernames = props => {
 	return <div>{JSON.stringify(props.item)}</div>;
 };
-const MoreLogins = (props) => {
+const MoreLogins = props => {
 	return <div>{JSON.stringify(props.item)}</div>;
 };
 class Data extends React.Component {
@@ -49,14 +69,7 @@ class Data extends React.Component {
 	render() {
 		return (
 			<div id="content-area" className="tab-content">
-				<div id="password" className="tab-pane active">
-					<div>Top users with failed attempts because of password</div>
-					<ul>
-						{this.state.passwordFailure.map( (item, index) => {
-							return <li key={'p' + index}><Password item={item} /></li>;
-						})}
-					</ul>
-				</div>
+				<PasswordTable data={this.state.passwordFailure} />
 				<div id="username" className="tab-pane">
 					<div>Top users with failed attempts because of usernames</div>
 					<ul>
@@ -73,7 +86,7 @@ class Data extends React.Component {
 						})}
 					</ul>
 				</div>
-			</div>
+      </div>
 		);
 	}
 };
